@@ -1,0 +1,82 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdk rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+
+        testInstrumentationRunner rootProject.ext.testInstrumentationRunner
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            debuggable true
+            buildConfigField "String", "MOVIE_DB_KEY", "\"f6c06b6a1cc549d810d4fb194b9d7633\""
+            buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/\""
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        staging {
+            minifyEnabled false
+            debuggable true
+            buildConfigField "String", "MOVIE_DB_KEY", "\"f6c06b6a1cc549d810d4fb194b9d7633\""
+            buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/\""
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            minifyEnabled true
+            debuggable false
+            buildConfigField "String", "MOVIE_DB_KEY", "\"f6c06b6a1cc549d810d4fb194b9d7633\""
+            buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/\""
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation project(':domain')
+    implementation dataDependencies.androidCoreKtx
+    implementation dataDependencies.appcompat
+    implementation dataDependencies.material
+
+    //Rx Kotlin
+    implementation dataDependencies.rxKotlin
+
+    //Room (Database)
+    implementation dataDependencies.roomRuntime
+    implementation dataDependencies.roomRxJava2
+    kapt dataDependencies.roomCompiler
+
+    //Retrofit
+    implementation dataDependencies.retrofit
+    implementation dataDependencies.converterGson
+    implementation dataDependencies.adapterRxJava2
+    implementation dataDependencies.loggingInterceptor
+
+    //Timber
+    implementation dataDependencies.timber
+
+    //Gson
+    implementation dataDependencies.timber
+
+    testImplementation dataTestDependencies.junit
+    androidTestImplementation dataTestDependencies.supportJunit
+    androidTestImplementation dataTestDependencies.espresso
+}

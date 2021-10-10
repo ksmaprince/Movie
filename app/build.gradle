@@ -1,0 +1,74 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdk rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        applicationId rootProject.ext.applicationId
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+
+        testInstrumentationRunner rootProject.ext.testInstrumentationRunner
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation project(':domain')
+    implementation project(':data')
+
+    implementation appDependencies.androidCoreKtx
+    implementation appDependencies.appcompat
+    implementation appDependencies.material
+    implementation appDependencies.constraintlayout
+/*
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'*/
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
+
+    //RX
+    implementation appDependencies.rxAndroid
+    implementation appDependencies.rxKotlin
+
+    //DI
+    implementation appDependencies.koin
+
+    //LOG
+    implementation appDependencies.timber
+
+    //MVI
+    implementation appDependencies.mosbymvi
+    implementation appDependencies.mosbyviewstate
+
+    //GLIDE
+    implementation appDependencies.glide
+    kapt appDependencies.glidecompiler
+
+    testImplementation appTestDependencies.junit
+    androidTestImplementation appTestDependencies.supportJunit
+    androidTestImplementation appTestDependencies.espresso
+}
